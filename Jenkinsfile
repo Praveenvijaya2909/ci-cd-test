@@ -8,15 +8,24 @@ pipeline {
             }
         }
 
-        stage('Set Up Python') {
+        stage('Set Up Python in /opt') {
             steps {
                 sh '''
                     sudo apt-get update
                     sudo apt-get install -y python3.12-venv
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    pip3 install flask
-                    nohup python3 app.py > app.log 2>&1 < /dev/null &
+
+                    # Create virtual environment in /opt
+                    sudo python3.12 -m venv /opt/venv
+
+                    # Change ownership so Jenkins can access it
+                    sudo chown -R $(whoami):$(whoami) /opt/venv
+
+                    # Activate environment and install dependencies
+                    . /opt/venv/bin/activate
+                    pip install flask
+
+                    # Run the app in background
+                    nohup /opt/venv/bin/python app.py > app.log 2>&1 < /dev/null &
                 '''
             }
         }
