@@ -22,8 +22,8 @@ pipeline {
 
         stage('Run Flask App') {
             steps {
-                sh '''#!/bin/bash
-                    python3 app.py --host=0.0.0.0 --port=5000 > app.log 2>&1 < /dev/null &
+                sh '''
+                    nohup python3 app.py > app.log 2>&1 < /dev/null &
                 '''
             }
         }
