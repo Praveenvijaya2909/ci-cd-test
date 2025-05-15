@@ -15,7 +15,7 @@ pipeline {
                     sudo apt-get install -y python3.12-venv
                     python3 -m venv venv
                     . venv/bin/activate
-                    pip install flask
+                    pip3 install flask
                 '''
             }
         }
