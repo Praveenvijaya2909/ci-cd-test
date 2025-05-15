@@ -22,9 +22,10 @@ pipeline {
 
         stage('Run Flask App') {
             steps {
-                sh '''                    
-                    . venv/bin/activate
-                    nohup python3 app.py --host=0.0.0.0 --port=5000 > app.log 2>&1 &
+                sh '''#!/bin/bash
+                    set -e
+                    source venv/bin/activate
+                    setsid python3 app.py --host=0.0.0.0 --port=5000 > app.log 2>&1 < /dev/null &
                 '''
             }
         }
