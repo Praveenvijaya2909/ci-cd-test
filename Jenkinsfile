@@ -1,33 +1,23 @@
-
 pipeline {
     agent any
 
     stages {
         stage('Clone Repo') {
             steps {
-                echo 'Cloning repository...'
-                // Add Git clone step or use SCM
+                echo 'Cloning repo...'
             }
         }
 
-        stage('Set Up Python Environment') {
+        stage('Set Up Python') {
             steps {
-                echo 'Setting up Python environment...'
-                // Add steps to install Python, create venv, install dependencies
-            }
-        }
-
-        stage('Run App') {
-            steps {
-                echo 'Running app in background...'
-                // Add steps to run app.py in background using nohup
-            }
-        }
-
-        stage('Check App Status') {
-            steps {
-                echo 'Checking if app is running...'
-                // Add command to check if app.py is running
+                sh '''
+                    sudo apt-get update
+                    sudo apt-get install -y python3.12-venv
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip3 install flask
+                    nohup python3 app.py > app.log 2>&1 < /dev/null &
+                '''
             }
         }
     }
