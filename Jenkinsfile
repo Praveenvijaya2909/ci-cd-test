@@ -11,9 +11,18 @@ pipeline {
         stage('Set Up Python') {
             steps {
                 sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
                     pip install flask
-                    sudo apt-get install -y tmux
-                    tmux new-session -d -s flaskapp 'python3 app.py'
+                '''
+            }
+        }
+
+        stage('Run Flask App') {
+            steps {
+                sh '''
+                    . venv/bin/activate
+                    nohup python3 app.py > app.log 2>&1 &
                 '''
             }
         }
