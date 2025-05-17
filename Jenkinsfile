@@ -13,18 +13,12 @@ pipeline {
                 sh '''
                     python3 -m venv venv
                     . venv/bin/activate
+                    pip install pm2
                     pip install flask
+                    pm2 start app.py --name flask-app --interpreter python3
+                    pm2 save
                 '''
             }
-        }
-
-        stage('Run Flask App') {
-            steps {
-                sh '''                    
-                    . venv/bin/activate
-                    nohup python3 app.py > app.log 2>&1 &
-                '''
-            }
-        }
+        }   
     }
 }
