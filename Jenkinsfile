@@ -5,6 +5,7 @@ pipeline {
         stage('Clone Repo') {
             steps {
                 echo 'Cloning repo...'
+                checkout scm
             }
         }
 
@@ -21,6 +22,7 @@ pipeline {
         stage('Run Flask App') {
             steps {
                 sh '''
+                    export JENKINS_NODE_COOKIE=dontKillMe
                     . venv/bin/activate
                     nohup python3 app.py > app.log 2>&1 &
                 '''
