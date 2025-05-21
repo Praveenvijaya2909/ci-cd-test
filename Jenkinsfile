@@ -20,7 +20,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 dir("$APP_DIR") {
-                    
+                    git branch: 'main', credentialsId: 'Praveen', url: 'https://github.com/Praveenvijaya2909/ci-cd-test.git'
                 }
             }
         }
