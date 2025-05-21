@@ -5,7 +5,6 @@ pipeline {
         IMAGE_NAME = "ci-cd-test"
         CONTAINER_NAME = "ci-cd-test"
         APP_DIR = "ci-cd-test"
-        GIT_REPO = "https://github.com/AdminVelesium/ci-cd-test"
     }
 
     stages {
@@ -21,7 +20,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 dir("$APP_DIR") {
-                    git credentialsId: 'AdminVelesium', url: "$GIT_REPO", branch: 'main'
+                    
                 }
             }
         }
